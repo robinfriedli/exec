@@ -1,0 +1,29 @@
+plugins {
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.4.10"
+}
+
+group = "net.robinfriedli"
+version = "1.0"
+sourceCompatibility = "8"
+targetCompatibility = "8"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    testCompile "org.testng:testng:7.3.0"
+}
+
+test {
+    useTestNG()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
