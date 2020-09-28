@@ -3,7 +3,7 @@ package net.robinfriedli.exec
 import java.util.concurrent.Callable
 import java.util.function.Function
 
-class BaseInvoker : Invoker {
+open class BaseInvoker : Invoker {
 
     @Throws(Exception::class)
     override fun <T> invoke(mode: Mode, task: Callable<T>): T {
