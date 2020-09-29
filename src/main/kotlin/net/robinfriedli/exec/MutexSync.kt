@@ -19,12 +19,10 @@ class MutexSync<K> {
             mutex = mutexMap.computeIfAbsent(key, { k: K -> ReferenceCountedMutex(k, mutexMap) })
             val currentRc = mutex.incrementRc()
 
-            // It is possible that some thread cleared the mutex just after this thread retrieved it from the map
-            // but before this thread increments the rc. In this case the thread that removed the mutex also decremented
-            // the rc again to a negative integer so we can check here whether the previous rc was indeed negative when
-            // incrementing and retry getting the mutex. The order of these operations (the removing thread decrementing
-            // rc twice then this thread incrementing rc) is guaranteed to be correct since incrementRc() and decrementRc()
-            // are both synchronised methods.
+            // An rc of 0 marks an invalid mutex that was or currently is being removed from the map, meaning the mutex
+            // retrieved from the map was in the process of being removed by some other thread or at least before this
+            // thread managed to increment the rc, now failing to do so because once the rc has reached 0 it cannot be
+            // incremented. In this case the process of acquiring the mutex has to be retried.
             if (currentRc > 0) {
                 break
             }
