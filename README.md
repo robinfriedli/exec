@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation "net.robinfriedli:exec:1.1"
+    implementation "net.robinfriedli:exec:1.2"
 }
 ```
 
@@ -22,7 +22,7 @@ dependencies {
 <dependency>
   <groupId>net.robinfriedli</groupId>
   <artifactId>exec</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
   <type>pom</type>
 </dependency>
 

@@ -28,13 +28,11 @@ class MutexSync<K> {
             }
         }
 
-        // -- thread C is here
         synchronized(mutex) {
             return try {
-                toRun.call() // - thread B is still here
+                toRun.call()
             } finally {
                 mutex.decrementRc()
-                // -- thread A is here (without reference counting it would have removed the mutex)
             }
         }
     }

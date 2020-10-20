@@ -10,8 +10,6 @@ class ReferenceCountedMutex<T>(private val key: T, private val containingMap: Mu
 
     private val rc = AtomicInteger(Int.MIN_VALUE)
 
-    private var destroyed = false
-
     fun incrementRc(): Int {
         return rc.updateAndGet { i ->
             when {
@@ -35,13 +33,8 @@ class ReferenceCountedMutex<T>(private val key: T, private val containingMap: Mu
      */
     fun decrementRc(): Boolean {
         val currentRc = rc.decrementAndGet()
-        if (currentRc <= 0) {
-            synchronized(this) {
-                if (!destroyed) {
-                    destroyed = containingMap.remove(key) != null
-                    return destroyed
-                }
-            }
+        if (currentRc == 0) {
+            return containingMap.remove(key) != null
         }
         return false
     }
