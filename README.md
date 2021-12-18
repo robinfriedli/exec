@@ -9,27 +9,26 @@ For example, one could create a mode that manages a transaction when executing a
 ### Gradle
 ```
 repositories {
-    jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    implementation "net.robinfriedli:exec:1.2"
+    implementation "com.github.robinfriedli:exec:1.2.1"
 }
 ```
 
 ### Maven
 ```
 <dependency>
-  <groupId>net.robinfriedli</groupId>
+  <groupId>com.github.robinfriedli</groupId>
   <artifactId>exec</artifactId>
-  <version>1.2</version>
+  <version>1.2.1</version>
   <type>pom</type>
 </dependency>
 
 <repository>
-    <id>jcenter</id>
-    <name>jcenter-bintray</name>
-    <url>https://jcenter.bintray.com</url>
+    <name>jitpack.io</name>
+    <url>https://jitpack.io</url>
 </repository>
 ```
 

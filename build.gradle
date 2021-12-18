@@ -2,11 +2,10 @@ plugins {
     id "java"
     id "org.jetbrains.kotlin.jvm" version "1.4.10"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.8.4"
 }
 
 group = "net.robinfriedli"
-version = "1.2"
+version = "1.2.1"
 sourceCompatibility = "8"
 targetCompatibility = "8"
 
@@ -19,7 +18,7 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
-    testCompile "org.testng:testng:7.3.0"
+    testCompile "org.testng:testng:7.4.0"
 }
 
 test {
@@ -47,24 +46,5 @@ publishing {
 
             artifact tasks.sourceJar
         }
-    }
-}
-
-def bintrayProperties = new Properties()
-def bintrayPropertiesFile = file("src/main/resources/bintray.properties")
-if (bintrayPropertiesFile.exists()) {
-    bintrayPropertiesFile.withInputStream { bintrayProperties.load(it) }
-} else {
-    bintrayProperties.setProperty("bintray.user", "empty")
-    bintrayProperties.setProperty("bintray.key", "empty")
-}
-
-bintray {
-    user = bintrayProperties.get("bintray.user")
-    key = bintrayProperties.get("bintray.key")
-    publications = ["maven"]
-    pkg {
-        repo = rootProject.group
-        name = "exec"
     }
 }
