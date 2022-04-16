@@ -28,6 +28,7 @@ interface Invoker {
     @Throws(Exception::class)
     fun <T> invoke(mode: Mode, task: Callable<T>): T
 
+    @Throws(Exception::class)
     fun <T> invoke(task: Callable<T>): T {
         return invoke(Mode.empty, task)
     }
