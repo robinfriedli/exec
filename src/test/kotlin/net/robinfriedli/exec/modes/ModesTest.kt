@@ -1,14 +1,51 @@
 package net.robinfriedli.exec.modes
 
+import net.robinfriedli.exec.AbstractNestedModeWrapper
 import net.robinfriedli.exec.Invoker
 import net.robinfriedli.exec.Mode
 import net.robinfriedli.exec.MutexSync
 import org.testng.Assert.*
+import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
+import java.util.concurrent.Callable
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 class ModesTest {
+
+    @DataProvider
+    fun boolDataProvider(): Array<Any> {
+        return arrayOf(true, false)
+    }
+
+    @Test(dataProvider = "boolDataProvider")
+    fun testForkMode(immutableMode: Boolean) {
+        val mode1 = Mode
+            .create()
+            .with(AdditionModeWrapper(2))
+            .with(AdditionModeWrapper(7))
+        val mode2 = if (immutableMode) {
+            mode1.immutable()
+        } else {
+            mode1.fork()
+        }.with(AdditionModeWrapper(4))
+
+        val invoker = Invoker.defaultInstance
+        val res1 = invoker.invoke<Int>(mode1) { 3 }
+        val res2 = invoker.invoke<Int>(mode2) { 3 }
+
+        assertEquals(res1, 12)
+        assertEquals(res2, 16)
+    }
+
+    class AdditionModeWrapper(private val summand: Int) : AbstractNestedModeWrapper() {
+        override fun <T> wrap(callable: Callable<T>): Callable<T> {
+            return Callable {
+                (callable.call() as Int + summand) as T
+            }
+        }
+
+    }
 
     @Test
     fun testExceptionWrappingMode() {

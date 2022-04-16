@@ -9,17 +9,22 @@ abstract class AbstractNestedModeWrapper : ModeWrapper {
 
     private var outer: ModeWrapper? = null
 
-    override fun combine(mode: ModeWrapper): ModeWrapper {
+    final override fun combine(mode: ModeWrapper): ModeWrapper {
         mode.setOuter(this)
         return mode
     }
 
-    override fun getOuter(): ModeWrapper? {
+    final override fun getOuter(): ModeWrapper? {
         return outer
     }
 
-    override fun setOuter(mode: ModeWrapper?) {
+    final override fun setOuter(mode: ModeWrapper?) {
         this.outer = mode
+    }
+
+    override fun fork(): ModeWrapper {
+        // since this combine implementation does not modify this ModeWrapper instance it is inherently immutable
+        return this
     }
 
 }

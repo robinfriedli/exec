@@ -36,6 +36,14 @@ interface ModeWrapper : Iterable<ModeWrapper> {
 
     fun setOuter(mode: ModeWrapper?)
 
+    /**
+     * Clones this ModeWrapper for use in a new [Mode]. Changes to the returned ModeWrapper are not reflected by this instance.
+     *
+     * If the [ModeWrapper.combine] implementation does not modify this instance, meaning this implementation is practically
+     * immutable, this method does not have to do anything and can return the current instance.
+     */
+    fun fork(): ModeWrapper
+
     override fun iterator(): Iterator<ModeWrapper> {
         return object : Iterator<ModeWrapper> {
 
