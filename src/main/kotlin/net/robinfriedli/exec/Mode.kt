@@ -9,6 +9,9 @@ class Mode {
 
     companion object {
         @JvmStatic
+        val empty = create()
+
+        @JvmStatic
         fun create(): Mode {
             return Mode()
         }

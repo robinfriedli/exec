@@ -5,6 +5,10 @@ import java.util.function.Function
 
 open class BaseInvoker : Invoker {
 
+    /**
+     * Central invoke implementation called by all other methods. This method is responsible for applying [ModeWrapper]s
+     * to the task so be sure to call this implementation when implementing a custom [Invoker].
+     */
     @Throws(Exception::class)
     override fun <T> invoke(mode: Mode, task: Callable<T>): T {
         val modeWrapper = mode.getWrapper()
@@ -46,4 +50,7 @@ open class BaseInvoker : Invoker {
         })
     }
 
+    override fun combine(invoker: Invoker): Invoker {
+        return CombinedInvoker(this, invoker)
+    }
 }

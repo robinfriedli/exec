@@ -1,17 +1,17 @@
 package net.robinfriedli.exec;
 
+import org.testng.annotations.Test;
+
 import java.util.concurrent.Callable;
 
-import org.testng.annotations.*;
-
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class JavaTest {
 
     @Test
     public void testSimpleInvocation() {
-        Invoker invoker = new BaseInvoker();
-        Mode mode = Mode.create();
+        Invoker invoker = Invoker.getDefaultInstance();
+        Mode mode = Mode.getEmpty();
 
         MutableInteger i = new MutableInteger(1);
         invoker.invoke(mode, () -> i.add(1));

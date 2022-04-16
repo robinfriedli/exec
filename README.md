@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation "com.github.robinfriedli:exec:1.2.2"
+    implementation "com.github.robinfriedli:exec:1.3"
 }
 ```
 
@@ -22,7 +22,7 @@ dependencies {
 <dependency>
   <groupId>com.github.robinfriedli</groupId>
   <artifactId>exec</artifactId>
-  <version>1.2.2</version>
+  <version>1.3</version>
   <type>pom</type>
 </dependency>
 
